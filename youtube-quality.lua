@@ -58,7 +58,8 @@ local opts = {
     {"480p" : "bestvideo[height<=?480]+bestaudio/best"},
     {"360p" : "bestvideo[height<=?360]+bestaudio/best"},
     {"240p" : "bestvideo[height<=?240]+bestaudio/best"},
-    {"144p" : "bestvideo[height<=?144]+bestaudio/best"}
+    {"144p" : "bestvideo[height<=?144]+bestaudio/best"},
+    {"audio": "bestaudio/best"}
     ]
     ]],
 }
@@ -228,10 +229,15 @@ function download_formats()
             local l = string.format("%-9s %-5s (%-4s / %s)", resolution, fps, v.ext, v.vcodec)
             local f = string.format("%s+bestaudio/best", v.format_id)
             table.insert(res, {label=l, format=f, width=v.width })
+        else
+            local resolution = ("audio")
+            local l = string.format("%-15s (%s)", resolution, v.ext)
+            local f = string.format("bestaudio/best")
+            table.insert(res, {label=l, format=f, width=v.width })
         end
     end
 
-    table.sort(res, function(a, b) return a.width > b.width end)
+    table.sort(res, function(a, b) return a.width ~= nil and b.width ~= null and a.width > b.width end)
 
     mp.osd_message("", 0)
     format_cache[url] = res
