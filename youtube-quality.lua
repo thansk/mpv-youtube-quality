@@ -162,7 +162,7 @@ function show_menu()
 end
 
 local ytdl = {
-    path = "youtube-dl",
+    path = "yt-dlp",
     searched = false,
     blacklisted = {}
 }
